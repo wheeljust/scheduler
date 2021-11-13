@@ -9,14 +9,15 @@ export default function DayList(props) {
   //.map over the days array to create a new array called dayList containing all of the DayListItem components
   const dayList = days.map((currentDay) => {
 
-    const dayListItemProps = {
-      ...currentDay,
+    const dayProps = {
       key: currentDay.id,
+      name: currentDay.name,
+      spots: currentDay.spots,
       selected: (currentDay.name === day),
-      setDay
+      setDay: () => setDay(currentDay.name)
     };
 
-    return <DayListItem {...dayListItemProps} />;
+    return <DayListItem {...dayProps} />;
 
   });
 
