@@ -10,14 +10,17 @@ export default function InterviewerList(props) {
   //.map over the days array to create a new array called dayList containing all of the DayListItem components
   const interviewerList = interviewers.map((currentInterviewer) => {
 
-    const interviewerListItemProps = {
-      ...currentInterviewer,
+    const interviewerProps = {
       key: currentInterviewer.id,
+      name: currentInterviewer.name,
+      avatar: currentInterviewer.avatar,
       selected: (currentInterviewer.id === interviewer),
-      setInterviewer
+      setInterviewer: () => {
+        setInterviewer(currentInterviewer.id);
+      }
     };
 
-    return <InterviewerListItem {...interviewerListItemProps} />;
+    return <InterviewerListItem {...interviewerProps} />;
 
   });
 
