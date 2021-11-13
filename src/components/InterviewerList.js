@@ -5,17 +5,17 @@ import "./InterviewerList.scss";
 export default function InterviewerList(props) {
 
   //Extract the props to variables to keep code DRY
-  const { interviewers, interviewer, setInterviewer } = props;
+  const { interviewers, value, onChange } = props;
 
   //.map over the interviewers array to create a new array called interviewerList containing all of the InterviewerListItem components
-  const interviewerList = interviewers.map((currentInterviewer) => {
+  const interviewerList = interviewers.map((interviewer) => {
 
     const interviewerProps = {
-      key: currentInterviewer.id,
-      name: currentInterviewer.name,
-      avatar: currentInterviewer.avatar,
-      selected: (currentInterviewer.id === interviewer),
-      setInterviewer: () => setInterviewer(currentInterviewer.id)
+      key: interviewer.id,
+      name: interviewer.name,
+      avatar: interviewer.avatar,
+      selected: (interviewer.id === value),
+      setInterviewer: () => onChange(interviewer.id)
     };
 
     return <InterviewerListItem {...interviewerProps} />;
