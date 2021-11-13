@@ -15,9 +15,7 @@ export default function InterviewerList(props) {
       name: currentInterviewer.name,
       avatar: currentInterviewer.avatar,
       selected: (currentInterviewer.id === interviewer),
-      setInterviewer: () => {
-        setInterviewer(currentInterviewer.id);
-      }
+      setInterviewer: () => setInterviewer(currentInterviewer.id)
     };
 
     return <InterviewerListItem {...interviewerProps} />;
