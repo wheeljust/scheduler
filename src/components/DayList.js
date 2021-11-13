@@ -4,7 +4,7 @@ import DayListItem from "components/DayListItem"
 export default function DayList(props) {
 
   //Extract the props to variables to keep code DRY
-  const { days, day, setDay } = props;
+  const { days, value, onChange } = props;
 
   //.map over the days array to create a new array called dayList containing all of the DayListItem components
   const dayList = days.map((currentDay) => {
@@ -13,8 +13,8 @@ export default function DayList(props) {
       key: currentDay.id,
       name: currentDay.name,
       spots: currentDay.spots,
-      selected: (currentDay.name === day),
-      setDay: () => setDay(currentDay.name)
+      selected: (currentDay.name === value),
+      setDay: () => onChange(currentDay.name)
     };
 
     return <DayListItem {...dayProps} />;
