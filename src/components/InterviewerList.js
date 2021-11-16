@@ -5,6 +5,7 @@ import "./InterviewerList.scss";
 export default function InterviewerList(props) {
 
   //Extract the props to variables to keep code DRY
+  //The state ("value") is the current interviewer
   const { interviewers, value, onChange } = props;
 
   //.map over the interviewers array to create a new array called interviewerList containing all of the InterviewerListItem components
