@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "components/Application.scss";
-import DayList from "components/DayList"
-import Appointment from "components/Appointment"
+import DayList from "components/DayList";
+import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 
 export default function Application(props) {
@@ -38,12 +38,34 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
       />;
     });
 
     appointmentList.push(<Appointment key="last" time="5pm" />);
     return appointmentList;
-  }
+  };
+
+  /**
+   * bookInterview
+   * @param {Number} id the appointment id 
+   * @param {Object} interview contains student name and interviewer id
+   */
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => setState({ ...state, appointments }))
+      .catch(err => console.log(err.message));
+  };
 
   return (
     <main className="layout">
