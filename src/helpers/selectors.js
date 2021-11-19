@@ -43,3 +43,34 @@ export const getInterview = (state, interview) => {
 
   return newInterview
 };
+
+/**
+ * getInterviewersForDay
+ * @param {Object} state includes key value pairs of the tracked state
+ * @param {String} selectedDay the current value of the "day" state
+ * @returns {Array} containing interviewer objects related to the interviewers assigned on the selectedDay
+ */
+export const getInterviewersForDay = (state, selectedDay) => {
+  const { days, interviewers } = state;
+
+  // If no days data was found, return an empty array
+  if (!days.length) return [];
+
+  let interviewerArray;
+  for (const day of days) {
+    if (day.name === selectedDay) {
+      interviewerArray = day.interviewers;
+      break;
+    }
+  };
+
+  // No day.name in the daysArray matching the selected day
+  if (!interviewerArray) return [];
+
+  const interviewerDetails = interviewerArray.reduce((results, id) => {
+    results.push(interviewers[id]);
+    return results;
+  }, [])
+
+  return interviewerDetails;
+}
