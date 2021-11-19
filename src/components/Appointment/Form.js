@@ -21,8 +21,6 @@ export default function Form(props) {
     onCancel();
   }
 
-
-  //********** NOTE - the onSave function will be updated in a later exercise ************************** //
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
