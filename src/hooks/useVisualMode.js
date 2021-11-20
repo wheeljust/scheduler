@@ -3,13 +3,14 @@ import { useState } from "react";
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
+  const removeLastElement = (array) => array.slice(0, array.length - 1);
 
   const transition = (newMode, replace = false) => {
+
     if (replace) {
-      const updatedHistory = [...history].slice(0, history.length - 1);
-      setHistory([...updatedHistory, newMode]);
+      setHistory(prev => ([...removeLastElement(prev), newMode]));
     } else {
-      setHistory([...history, newMode]);
+      setHistory(prev => ([...prev, newMode]));
     }
     setMode(newMode);
   };
@@ -17,15 +18,12 @@ export default function useVisualMode(initial) {
   const back = () => {
     if (history.length === 1) return;
 
-    //create a copy of the current history state, remove the last element
-    const updatedHistory = [...history].slice(0, history.length - 1);
-
-    //Assign prevMode as the last element in the updatedHistory array
-    const prevMode = updatedHistory[updatedHistory.length - 1];
+    //Assign prevMode as the 2nd last element in the current history array
+    const prevMode = history[history.length - 2];
 
     //Set the mode and updatedHistory
     setMode(prevMode);
-    setHistory([...updatedHistory]);
+    setHistory(prev => ([...removeLastElement(prev)]));
   };
 
   return {
