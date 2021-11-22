@@ -28,6 +28,10 @@ The application implements React based components and hooks to create a smooth u
 - react-dom: ^16.9.0
 - react-scripts: 3.0.0
 
+## API Testing Server
+
+Fork and clone the API testing server: [scheduler-api](https://github.com/lighthouse-labs/scheduler-api)
+
 ## Setup
 
 Install dependencies with `npm install`.
