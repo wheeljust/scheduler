@@ -3,7 +3,7 @@ import Button from '../Button';
 import InterviewerList from '../InterviewerList';
 
 export default function Form(props) {
-  const { interviewers, onSave, onCancel } = props;
+  const { interviewers, onSave, onCancel, isUpdate } = props;
 
   //If the form receives state values for the student and interviewer, then these values should appear initially
   const [student, setStudent] = useState(props.student || "");
@@ -43,7 +43,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={() => onSave(student, interviewer)}>Save</Button>
+          <Button confirm onClick={() => onSave(student, interviewer, isUpdate)}>Save</Button>
         </section>
       </section>
     </main>

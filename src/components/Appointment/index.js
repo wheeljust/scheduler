@@ -29,13 +29,13 @@ export default function Appointment(props) {
   const { id, time, interview, interviewers, bookInterview, cancelInterview } = props;
   const { mode, transition, back } = useVisualMode((interview) ? SHOW : EMPTY);
 
-  const save = (student, interviewer) => {
+  const save = (student, interviewer, isUpdate) => {
     const newInterview = {
       student,
       interviewer
     };
     transition(SAVING);
-    bookInterview(id, newInterview)
+    bookInterview(id, newInterview, isUpdate)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   };
@@ -76,6 +76,7 @@ export default function Appointment(props) {
           student={interview.student}
           interviewer={interview.interviewer.id}
           interviewers={interviewers}
+          isUpdate={true}
           onSave={save}
           onCancel={() => back()}
         />

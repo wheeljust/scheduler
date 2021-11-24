@@ -33,7 +33,7 @@ export default function useApplicationData() {
  * @param {Object} interview contains student name and interviewer id
  * @returns {Promise} axios put request that updates the appointments state
  */
-  const bookInterview = (id, interview) => {
+  const bookInterview = (id, interview, isUpdate) => {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -44,7 +44,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const days = updateSpotsRemaining(state.days, state.day, -1);
+    const days = isUpdate ? [...state.days] : updateSpotsRemaining(state.days, state.day, -1);
 
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => setState({ ...state, appointments, days }))
