@@ -26,37 +26,38 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 
 export default function Appointment(props) {
-  const { mode, transition, back } = useVisualMode((props.interview) ? SHOW : EMPTY);
+  const { id, time, interview, interviewers, bookInterview, cancelInterview } = props;
+  const { mode, transition, back } = useVisualMode((interview) ? SHOW : EMPTY);
 
-  const save = (name, interviewer) => {
-    const interview = {
-      student: name,
+  const save = (student, interviewer) => {
+    const newInterview = {
+      student,
       interviewer
-    }
+    };
     transition(SAVING);
-    props.bookInterview(props.id, interview)
-      .then((res) => transition(SHOW))
-      .catch(error => transition(ERROR_SAVE, true));
+    bookInterview(id, newInterview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true));
   };
 
   const deleteInterview = () => {
     transition(DELETING, true);
-    props.cancelInterview(props.id)
+    cancelInterview(id)
       .then(() => transition(EMPTY))
-      .catch((err) => transition(ERROR_DELETE, true));
+      .catch(() => transition(ERROR_DELETE, true));
   };
 
   return (
     <article className="appointment">
 
-      <Header time={props.time} />
+      <Header time={time} />
 
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 
       {mode === SHOW && (
         <Show
-          student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          student={interview.student}
+          interviewer={interview.interviewer}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
@@ -64,7 +65,7 @@ export default function Appointment(props) {
 
       {mode === CREATE && (
         <Form
-          interviewers={props.interviewers}
+          interviewers={interviewers}
           onSave={save}
           onCancel={() => back()}
         />
@@ -72,9 +73,9 @@ export default function Appointment(props) {
 
       {mode === EDIT && (
         <Form
-          student={props.interview.student}
-          interviewer={props.interview.interviewer.id}
-          interviewers={props.interviewers}
+          student={interview.student}
+          interviewer={interview.interviewer.id}
+          interviewers={interviewers}
           onSave={save}
           onCancel={() => back()}
         />
@@ -106,4 +107,4 @@ export default function Appointment(props) {
 
     </article>
   );
-}
+};
