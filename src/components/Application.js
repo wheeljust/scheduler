@@ -22,29 +22,16 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
-  /**
-   * showAppointments
-   * @returns an array of appointment components for rendering
-   */
-  const showAppointments = () => {
-    const appointmentList = dailyAppointments.map((appointment) => {
-
-      const interview = getInterview(state, appointment.interview);
-
-      return <Appointment
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={interview}
-        interviewers={dailyInterviewers}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />;
-    });
-
-    appointmentList.push(<Appointment key="last" time="5pm" />);
-    return appointmentList;
-  };
+  const appointmentList = dailyAppointments.map((appointment) => {
+    return <Appointment
+      key={appointment.id}
+      {...appointment}
+      interview={getInterview(state, appointment.interview)}
+      interviewers={dailyInterviewers}
+      bookInterview={bookInterview}
+      cancelInterview={cancelInterview}
+    />;
+  });
 
   return (
     <main className="layout">
@@ -69,7 +56,8 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {showAppointments()}
+        {appointmentList}
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
