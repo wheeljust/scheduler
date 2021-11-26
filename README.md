@@ -13,6 +13,11 @@ The application implements React based components and hooks to create a smooth u
 
 **Author:** [@wheeljust](https://github.com/wheeljust/)
 
+## Stretch Features
+
+- Refactor custom useApplicationData Hook by using useReducer
+- Implement the updateSpotsRemaining functionality using reducers
+
 ## Final Product
 
 !["App-Interface"](https://github.com/wheeljust/scheduler/blob/master/docs/App-Interface.png?raw=true)
