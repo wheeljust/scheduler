@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import InterviewerListItem from "components/InterviewerListItem"
 import "./InterviewerList.scss";
 
@@ -30,4 +31,9 @@ export default function InterviewerList(props) {
       <ul className="interviewers__list">{interviewerList}</ul>
     </section>
   );
-}
+};
+
+//Quick example of how to use PropTypes testing library
+InterviewerList.propTypes = {
+  interviewers: PropTypes.array.isRequired
+};
