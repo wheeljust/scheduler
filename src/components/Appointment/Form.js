@@ -8,6 +8,7 @@ export default function Form(props) {
   //If the form receives state values for the student and interviewer, then these values should appear initially
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [error, setError] = useState("");
 
   //Reset the state values in the form
   const reset = () => {
@@ -21,6 +22,15 @@ export default function Form(props) {
     onCancel();
   }
 
+  const validate = () => {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+
+    onSave(student, interviewer, isUpdate);
+  }
+
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -30,10 +40,12 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
+            data-testid="student-name-input"
             value={student}
             onChange={(event) => setStudent(event.target.value)}
           />
         </form>
+        <section className="appointment__validation">{error}</section>
         <InterviewerList
           value={interviewer}
           onChange={setInterviewer}
@@ -43,7 +55,7 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm disabled={!student || !interviewer} onClick={() => onSave(student, interviewer, isUpdate)}>Save</Button>
+          <Button confirm /*disabled={!student || !interviewer}*/ onClick={() => validate()}>Save</Button>
         </section>
       </section>
     </main>
