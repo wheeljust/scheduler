@@ -14,22 +14,24 @@ export default function Form(props) {
   const reset = () => {
     setStudent("");
     setInterviewer(null);
-  }
+    setError("");
+  };
 
   //Reset the form and call whatever function is passed to the form as onCancel
   const cancel = () => {
     reset();
     onCancel();
-  }
+  };
 
   const validate = () => {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
-    }
+    };
 
+    setError("");
     onSave(student, interviewer, isUpdate);
-  }
+  };
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -55,9 +57,9 @@ export default function Form(props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm /*disabled={!student || !interviewer}*/ onClick={() => validate()}>Save</Button>
+          <Button confirm /*disabled={!student || !interviewer}*/ onClick={validate}>Save</Button>
         </section>
       </section>
     </main>
   );
-}
+};
