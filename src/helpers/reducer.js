@@ -28,10 +28,10 @@ export default function reducer(state, action) {
 
       let days = [...state.days];
       if (action.changeSpots === "DECREMENT") {
-        days = updateSpotsRemaining(state.days, state.day, -1);
+        days = updateSpotsRemaining(days, state.day, -1);
       }
       if (action.changeSpots === "INCREMENT") {
-        days = updateSpotsRemaining(state.days, state.day, 1);
+        days = updateSpotsRemaining(days, state.day, 1);
       }
 
       return {

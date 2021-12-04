@@ -1,8 +1,8 @@
 /**
 * updateSpotsRemaining
-* @param {Array} days 
-* @param {String} day 
-* @param {Integer} changeAmt 
+* @param {Array} days a copy of the current days state
+* @param {String} day the current state.days
+* @param {Integer} changeAmt either +/- 1 depending on the update type when called
 * @returns a new days array with the updatedSpots remaining for the current day
  */
 
