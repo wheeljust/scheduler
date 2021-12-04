@@ -46,7 +46,7 @@ export default function useApplicationData() {
           type: SET_INTERVIEW,
           id,
           interview,
-          changeSpots: (isUpdate ? "" : "DECREMENT")
+          changeSpots: (isUpdate ? "NONE" : "DECREMENT")
         })
       });
   };

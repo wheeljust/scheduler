@@ -26,12 +26,15 @@ export default function reducer(state, action) {
         [action.id]: appointment
       };
 
-      let days = [...state.days];
+      let days = null;
       if (action.changeSpots === "DECREMENT") {
-        days = updateSpotsRemaining(days, state.day, -1);
+        days = updateSpotsRemaining(state.days, state.day, -1);
       }
       if (action.changeSpots === "INCREMENT") {
-        days = updateSpotsRemaining(days, state.day, 1);
+        days = updateSpotsRemaining(state.days, state.day, 1);
+      }
+      if (action.changeSpots === "NONE") {
+        days = [...state.days]
       }
 
       return {

@@ -7,9 +7,17 @@
  */
 
 export default function updateSpotsRemaining(days, day, changeAmt) {
-  const dayIndex = days.findIndex(currentDay => currentDay.name === day);
-  const currentSpots = days[dayIndex].spots
+  const index = days.findIndex(currentDay => currentDay.name === day);
+  const dayObj = days[index];
+  const currentSpots = dayObj.spots;
 
-  days[dayIndex].spots = currentSpots + changeAmt;
-  return days;
+  //This will be the updated spots number for the current dayObj
+  const spots = currentSpots + changeAmt;
+  const newDay = { ...dayObj, spots };
+
+  // Add the updated copy of the newDay Object into a newDays array
+  const newDays = [...days];
+  newDays[index] = newDay;
+
+  return newDays;
 };
