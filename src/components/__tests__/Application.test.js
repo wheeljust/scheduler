@@ -2,11 +2,11 @@ import React from "react";
 
 import {
   render,
-  cleanup,
   waitForElement,
   waitForElementToBeRemoved,
   fireEvent,
   queryByText,
+  queryByAltText,
   getByText,
   getByAltText,
   getByPlaceholderText,
@@ -15,8 +15,6 @@ import {
 } from "@testing-library/react";
 
 import Application from "components/Application";
-
-afterEach(cleanup);
 
 describe("Application", () => {
 
@@ -32,7 +30,7 @@ describe("Application", () => {
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     // 1. Render the Application component, the container will used for scoping queries
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // 2. Wait for the mock axios get requests to resolve
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -62,6 +60,39 @@ describe("Application", () => {
 
     // 8. Test that the day item with text Monday also has text "no spots remaining"
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // 1. Render the Application.
+    const { container } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // 3. Target the appointment article on the page with Archie Cohen as the student name
+    const appointment = getAllByTestId(container, "appointment")
+      .find(appointment => queryByText(appointment, "Archie Cohen"));
+
+    // 4. Click the "Delete" button on the appointment and test for the confirm article to be in the document
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+    expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
+
+    // 5. Click the "Confirm" button on that same appointment.
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    // 6. Check that the element with the text "Deleting" is displayed.
+    expect(getByText(appointment, /deleting/i)).toBeInTheDocument();
+
+    // 7. Wait until the element with the "Add" button is displayed.
+    await waitForElement(() => getByAltText(appointment, "Add"));
+    expect(queryByText(container, "Archie Cohen")).not.toBeInTheDocument();
+
+    // 8. Target the day list, and QUERY for the list item with text "Monday"
+    const day = getAllByTestId(container, "day")
+      .find(day => queryByText(day, "Monday"));
+
+    // 9. Test that the day item with text Monday also has text "2 spots remaining"
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
   });
 
 
