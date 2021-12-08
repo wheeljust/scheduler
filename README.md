@@ -11,6 +11,11 @@ The user has the ability to execute the following actions:
 
 The application implements React based components and hooks to create a smooth user experience while the user is interacting with the application. The front end of this application makes requests using AXIOS to a pre-built API to fetch and store appointment data. All components and featured data update in real time based on browser events.
 
+A test driven development approach was taken in the creation of this application. The app was tested using the following:
+
+- Jest - unit and integration testing
+- Cypress - end-to-end basic user functionality tests
+
 **Author:** [@wheeljust](https://github.com/wheeljust/)
 
 ## Stretch Features
@@ -33,9 +38,11 @@ The application implements React based components and hooks to create a smooth u
 - react-dom: ^16.9.0
 - react-scripts: 3.0.0
 
-## API Testing Server
+## API Server
 
-Fork and clone the API testing server: [scheduler-api](https://github.com/lighthouse-labs/scheduler-api)
+For basic app functionality:
+
+- Fork and clone the API testing server: [scheduler-api](https://github.com/lighthouse-labs/scheduler-api)
 
 ## Setup
 
@@ -49,9 +56,39 @@ npm start
 
 ## Running Jest Test Framework
 
+- To run all unit and integration tests:
+
 ```sh
 npm test
 ```
+
+- To generate a coverage report:
+
+```sh
+npm test -- --coverage --watchAll=false
+```
+
+## Running Cypress Test Framework
+
+- Prior to running E2E cypress tests:
+
+  1. In a terminal, start the scheduler-api test server
+
+  ```sh
+  npm run test:server
+  ```
+
+  2. In a second terminal start the Webpack Dev Server for scheduler
+
+  ```sh
+  npm start
+  ```
+
+  3. In a third terminal, run the cypress test API
+
+  ```sh
+  npm run cypress
+  ```
 
 ## Running Storybook Visual Testbed
 
